@@ -1,0 +1,103 @@
+Com essa estrutura, podem ser utilizadas chamadas como por exemplo:
+
+		Pessoa eu = new Pessoa("eu");
+		Pessoa pai = new Pessoa("meu pai");
+		Pessoa mae = new Pessoa("minha mãe");
+		Pessoa irmao = new Pessoa("meu irmão");
+		Pessoa paiDoPai = new Pessoa("meu avô paterno");
+		eu.setPai(pai);
+		eu.setMae(mae);
+		irmao.setPai(pai);
+		irmao.setMae(mae);		
+		pai.setPai(paiDoPai);
+E a estrutura de cada objeto pode ser verificada pelo toString():		
+
+		System.out.println(eu);
+		System.out.println(pai);
+		System.out.println(mae);
+		System.out.println(irmao);
+O código fonte abaixo pode ser utilizado como ponto de partida para o desenvolvimento:
+
+import java.util.ArrayList;
+import java.util.Objects;
+public class Pessoa {
+	private String nome;
+	private Pessoa pai;
+	private Pessoa mae;
+	private ArrayList<Pessoa> filhos;
+	public Pessoa(String nome) {
+		this.nome = Objects.requireNonNull(nome);
+	}
+	public Pessoa(String nome, Pessoa pai, Pessoa mae) {
+		this(nome);
+		this.pai = pai;
+		this.mae = mae;
+	}
+	public Pessoa getPai() {
+		return pai;
+	}
+	public Pessoa getMae() {
+		return mae;
+	}
+	public void setPai(Pessoa pai) {
+		// incluir este filho na lista de filhos do pai
+		this.pai = pai;
+	}
+	public void setMae(Pessoa mae) {
+		// incluir este filho na lista de filhos da mãe
+		this.mae = mae;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public ArrayList<Pessoa> getFilhos() {
+		return filhos;
+	}
+	public ArrayList<Pessoa> getIrmaos() {
+		// devolver uma lista unificada de filhos do pai e da mãe
+		return null;
+	}
+	public ArrayList<Pessoa> getSobrinhos() {
+		// devolver uma lista unificada de filhos dos irmãos
+		return null;
+	}
+	public ArrayList<Pessoa> getNetos() {
+		// devolver uma lista unificada de filhos dos filhos
+		return null;
+	}
+	public ArrayList<Pessoa> getTios() {
+		// devolver uma lista unificada dos irmãos dos pais
+		return null;
+	}
+	public ArrayList<Pessoa> getPrimos() {
+		// devolver uma lista unificada de filhos dos tios
+		return null;
+	}
+	public ArrayList<Pessoa> getAvosMaternos() {
+		// devolver uma lista unificada com os pais da mãe
+		return null;
+	}
+	public ArrayList<Pessoa> getAvosPaternos() {
+		// devolver uma lista unificada com os pais do pai
+		return null;
+	}
+	@Override
+	public boolean equals(Object outraPessoa) {
+		if (outraPessoa == null)
+			return false;
+		if (this == outraPessoa)
+			return true;
+		if (this.getClass() != outraPessoa.getClass())
+			return false;
+		// Duas pessoas são iguais se tiverem o mesmo nome e os mesmos pais
+		return false;
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(getNome(), getPai(), getMae());
+	}
+	@Override
+	public String toString() {
+		return "[" + nome + ", pai=" + pai + ", mae=" + mae + "]";
+	}
+}
